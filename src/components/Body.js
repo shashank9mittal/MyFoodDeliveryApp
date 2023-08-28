@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RestaurantCard from "./RestaurantCard";
 import { RES_LIST_URL } from "../utils/constants";
+import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const [listOfRestaurant, setListOfRestaurant] = useState([]);
 
   const [filteredRestaurant, setfilteredRestaurant] = useState([]);
 
-  const [searchText, setSearchText] = useState(null);
+  const [searchText, setSearchText] = useState("");
 
-  useState(() => {
+  useEffect(() => {
     fetchData();
   }, []);
 
   async function fetchData() {
     const data = await fetch(RES_LIST_URL);
     const json = await data.json();
-    console.log(json);
     setListOfRestaurant(
       json?.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -25,7 +26,9 @@ const Body = () => {
     );
   }
 
-  return (
+  return listOfRestaurant?.length === 0 ? (
+    <Shimmer></Shimmer>
+  ) : (
     <div className='container mx-auto'>
       <div className='flex justify-end mx-8 my-4'>
         <input
@@ -41,7 +44,7 @@ const Body = () => {
           className='px-4 py-2 bg-orange-400 text-white rounded-r-md hover:bg-orange-500 focus:outline-none'
           onClick={() => {
             const filteredRestaurant = listOfRestaurant.filter((res) =>
-              res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              res?.info?.name?.toLowerCase().includes(searchText?.toLowerCase())
             );
 
             setfilteredRestaurant(filteredRestaurant);
@@ -51,12 +54,14 @@ const Body = () => {
           Search
         </button>
       </div>
-
       <div className='flex flex-wrap'>
         {filteredRestaurant?.map((restaurant) => (
-          <div key={restaurant?.info.id}>
+          <Link
+            key={restaurant?.info.id}
+            to={"restaurant/" + restaurant?.info.id}
+          >
             <RestaurantCard resData={restaurant?.info}></RestaurantCard>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

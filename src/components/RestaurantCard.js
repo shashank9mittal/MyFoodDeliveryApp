@@ -3,7 +3,7 @@ import { IMG_URL } from "../utils/constants";
 const RestaurantCard = (props) => {
   const { resData } = props;
   const { name, avgRating, cuisines, areaName } = resData;
-  console.log(props);
+  console.log(resData);
   return (
     <div className='  my-4 mx-6 w-64 h-72 rounded-lg  bg-gray-100 cursor-pointer drop-shadow hover:bg-gray-200'>
       <div className='h-40 w-full rounded-t-lg bg-gradient-to-b from-zinc-50 to-zinc-600'>
