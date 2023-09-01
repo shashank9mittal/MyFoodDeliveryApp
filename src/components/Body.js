@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import RestaurantCard from "./RestaurantCard";
+import { resData } from "../utils/restaurantData";
+import RestaurantCard, { topRated } from "./RestaurantCard";
 import { RES_LIST_URL } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 
 const Body = () => {
-  const [listOfRestaurant, setListOfRestaurant] = useState([]);
+  const [listOfRestaurant, setListOfRestaurant] = useState([resData]);
 
-  const [filteredRestaurant, setfilteredRestaurant] = useState([]);
+  const [filteredRestaurant, setfilteredRestaurant] = useState(resData);
 
   const [searchText, setSearchText] = useState("");
+  const TopRatedRestaurant = topRated(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -19,10 +21,10 @@ const Body = () => {
     const data = await fetch(RES_LIST_URL);
     const json = await data.json();
     setListOfRestaurant(
-      json?.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setfilteredRestaurant(
-      json?.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   }
 
@@ -30,7 +32,7 @@ const Body = () => {
     <Shimmer></Shimmer>
   ) : (
     <div className='container mx-auto'>
-      <div className='flex justify-end mx-8 my-4'>
+      <div className='flex justify-end my-4'>
         <input
           type='text'
           placeholder='Search...'
@@ -54,13 +56,19 @@ const Body = () => {
           Search
         </button>
       </div>
-      <div className='flex flex-wrap'>
+      <div className='flex flex-wrap justify-between'>
         {filteredRestaurant?.map((restaurant) => (
           <Link
             key={restaurant?.info.id}
-            to={"restaurant/" + restaurant?.info.id}
+            to={"restaurant/" + restaurant?.info?.id}
           >
-            <RestaurantCard resData={restaurant?.info}></RestaurantCard>
+            {restaurant?.info?.avgRating >= 4 ? (
+              <TopRatedRestaurant
+                resData={restaurant?.info}
+              ></TopRatedRestaurant>
+            ) : (
+              <RestaurantCard resData={restaurant?.info}></RestaurantCard>
+            )}
           </Link>
         ))}
       </div>

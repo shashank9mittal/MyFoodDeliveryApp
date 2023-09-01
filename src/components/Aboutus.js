@@ -1,3 +1,4 @@
+import Contact from "./Contact";
 const Aboutus = () => {
   return (
     <div>
@@ -16,6 +17,9 @@ const Aboutus = () => {
         pharetra, eget hendrerit orci ultricies. Morbi suscipit neque et
         ullamcorper hendrerit. Fusce eget nisl nec sem aliquet rutrum. Sed
         fermentum leo ut velit facilisis efficitur a vitae purus.
+      </div>
+      <div className='m-7'>
+        <Contact propText={"Hello From parent"}></Contact>
       </div>
     </div>
   );
