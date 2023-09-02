@@ -21,10 +21,10 @@ const Body = () => {
     const data = await fetch(RES_LIST_URL);
     const json = await data.json();
     setListOfRestaurant(
-      json?.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setfilteredRestaurant(
-      json?.data.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+      json?.data.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   }
 

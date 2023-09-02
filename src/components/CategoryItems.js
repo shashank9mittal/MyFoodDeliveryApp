@@ -1,6 +1,14 @@
+import { useDispatch, useSelector } from "react-redux";
 import { IMG_URL } from "../utils/constants";
+import { addItem } from "../store/cartSlice";
 
 const CategoryItems = ({ items }) => {
+  const cartItem = useSelector((store) => store.cart.items);
+  const dispatch = useDispatch();
+  const addToCart = (item) => {
+    dispatch(addItem(item?.card?.info));
+  };
+
   return (
     <div className='my-4'>
       {items.map((item) => (
@@ -32,7 +40,10 @@ const CategoryItems = ({ items }) => {
               src={IMG_URL + item?.card?.info?.imageId}
             />
             <div className='absolute bottom-1 right-11'>
-              <button className='px-4 py-2 text-xs rounded-sm bg-white shadow-md'>
+              <button
+                className='px-4 py-2 text-xs rounded-sm bg-white shadow-md'
+                onClick={() => addToCart(item)}
+              >
                 ADD
               </button>
             </div>

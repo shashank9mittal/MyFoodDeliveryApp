@@ -40,7 +40,7 @@ export const topRated = () => {
   return (props) => {
     return (
       <div className='relative'>
-        <div className='absolute left-0 top-1 px-2 py-1 my-1 bg-black text-white text-xs z-10 rounded-r-sm'>
+        <div className='absolute left-0 top-1 px-2 py-1 my-1 bg-orange-500 text-white font-bold text-xs z-10 rounded-r-sm'>
           Top Rated
         </div>
         <RestaurantCard {...props}></RestaurantCard>
